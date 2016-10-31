@@ -19,7 +19,7 @@ void printHeader();
 int main(){
   fstream fout("student.dat",fstream::app);
   if(!fout){
-    cerr<<"File could not be opened!";
+    cerr<<setw(50)<<"File could not be opened!";
     exit(0);//exit succesfully
   }
   fout.close();//file exit, now we can open it again for append in pack function
@@ -45,7 +45,7 @@ void pack(){
   Student student;
   string record;
   if(!fout){
-    cerr<<"File not exist!";
+    cerr<<setw(50)<<"File not exist!";
     exit(0);
   }
   cout<<"\nEnter the student name = "; cin>>student.name;
@@ -57,7 +57,7 @@ void pack(){
   record = static_cast<string>(student.name)+"|"+static_cast<string>(student.usn)+"|"+static_cast<string>(student.age)+"|"+static_cast<string>(student.sem)+"|"+static_cast<string>(student.branch);
   fout<<record<<endl;
   fout.close();
-  cout<<"Done Record addeded!";
+  cout<<setw(50)<<"Done Record addeded!";
 }
 
 void search(){
@@ -74,6 +74,7 @@ void search(){
 string record;
 while(fin>>record){
   if(unpack(field,record,usn)){
+    cout<<"sear\n";
     //display
     printHeader();
     for(auto& str: field){
@@ -83,7 +84,7 @@ while(fin>>record){
     return; //search found exit the function
   }
 }
-cout<<setw(35)<<"\nRecord Not Found!\t";
+cout<<setw(50)<<"Record Not Found!";
 }
 
 
@@ -96,11 +97,13 @@ int unpack(vector<string>& field,string record,string usn){
   }
   searBuffer.clear();
   searBuffer.str("");
-  for(auto& i: field){
-    if(i == usn){
-    return 1;
+
+    for(auto& i : field){
+      //there is hidden bugs here
+      if(i == usn){
+        return 1;
+      }
     }
-  }
   field.clear();//clear the vector for another input
   return 0;
 }
@@ -131,7 +134,7 @@ void displayFile(){
 void modify(){
   fstream fin("student.dat",fstream::in);
   if(!fin){
-    cerr<<"file could not be opened!";
+    cerr<<setw(50)<<"file could not be opened!";
     return;
   }
   cout<<"Enter USSN of the record you want to update>>\t";
@@ -148,7 +151,7 @@ void modify(){
 
     field.push_back(record);
     tempField.push_back(record);
-    if(!status){
+    if(status == 0){
       if(unpack(tempField,record,usn)){
         status =1;
         printHeader();
@@ -160,13 +163,13 @@ void modify(){
       }
     }
 
-    if(!status){
+    if(status == 0){
       recordLocation +=1;//this record usn has to be unique else ir changes the last one
     }
   }
   fin.close();
   if(!status){
-    cerr<<"No match found for the USSN!";
+    cerr<<setw(50)<<"No match found for the USSN!";
     return;
   }
   Student student;
@@ -184,7 +187,7 @@ void modify(){
   for(auto& rcd: field){
     fout<<rcd<<endl;
   }
-  cout<<"Done record updated!";
+  cout<<setw(50)<<"Done record updated!";
 }
 void printHeader(){
   cout<<setw(15)<<"Name"<<setw(15)<<"USN"<<setw(15)<<"Age"<<setw(15)<<"semester"<<setw(15)<<"Branch"<<endl;

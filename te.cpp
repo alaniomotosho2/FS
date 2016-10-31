@@ -5,15 +5,12 @@ using namespace std;
 int main()
 {
 vector<string> f;
-vector<string> ffa;
-f.push_back("man");f.push_back("woman");f.push_back("other");
-ffa = f;
-cout<<f.at(1);
-f.at(1) = "Bulshit";
-cout<<f.at(1);
-for(int i =0; i <10; i++){
-cout<<i;break;}
-cout<<"-------------------\n";
-cout<<ffa.at(0);
+f.push_back("Man");
+f.push_back("woman");
+f.push_back("others#");
+f.at(2) = "Nive man";
+for(auto& i : f){
+cout<<i<<endl;
+}
 return 0;
 }

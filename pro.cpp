@@ -26,30 +26,30 @@ int main()
 }
 
 void std_io(){
-  cout<<"Enter The number of names :>>\t";
+  cout<<"Enter The number of names: ? ";
   int num;
   cin>>num;
-  cout<<"Enter name :>>\t";
+  cout<<"Enter name :";
   string name[num];
   vector<string> nameList(num);
   //reuse this function
   getNames(nameList,name,num);
 
-  cout<<"The reversed names are :";
+  cout<<setw(50)<<"The reversed names are :";
   for(auto& myName: nameList){
     reverseName(myName);
-    cout<<right<<setw(15)<<myName<<endl;
+    cout<<setw(15)<<setw(15)<<myName<<endl;
   }
 }
 
 void usr_io(){
-  cout<<"Enter The the Name of a file to store the names :>>\t";
+  cout<<"Enter The the Name of a file to store the names : ? ";
   string nameFile;
   cin>>nameFile;
-  cout<<"Enter The name of file to stored reversed names :>>\t";
+  cout<<"Enter The name of file to stored reversed names : ? ";
   string revFile;
   cin>>revFile;
-  cout<<"Enter The number of names :>>\t";
+  cout<<"Enter The number of names : ? ";
   int num;
   cin>>num;
   string name[num];
@@ -100,9 +100,10 @@ void reverseName(string& itsName){
 }
 //reusable function
 void getNames(vector<string>& nameList,string name[],int num){
+  cout<<"? ";
   for(int i =0; i < num; i++){
     cin>>name[i];
-    cout<<">>\n";
+    cout<<" ? ";
     nameList.push_back(name[i]);
   }
 }

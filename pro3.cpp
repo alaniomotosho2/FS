@@ -45,7 +45,7 @@ int main()
 }
 
 void printHeader(){
-  cout<<setw(15)<<"Name"<<setw(15)<<"USN"<<setw(15)<<"Age"<<setw(15)<<"semester"<<setw(15)<<"Branch"<<endl;
+  cout<<setw(15)<<"NAME"<<setw(15)<<"USN"<<setw(15)<<"AGE"<<setw(15)<<"SEMESTER"<<setw(15)<<"BRANCH"<<endl;
   cout<<"-------------------------------------------------------------------------------\n";
 }
 

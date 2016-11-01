@@ -1,16 +1,16 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <sstream>
 using namespace std;
 int main()
 {
-vector<string> f;
-f.push_back("Man");
-f.push_back("woman");
-f.push_back("others#");
-f.at(2) = "Nive man";
-for(auto& i : f){
-cout<<i<<endl;
-}
+string la = "Laos";
+stringstream strr;
+strr<<"Lissa"<<"54";
+int an;
+string po;
+strr>>po>>an;
+cout<<po<<" "<<an;
 return 0;
 }

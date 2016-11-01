@@ -74,7 +74,6 @@ void search(){
 string record;
 while(fin>>record){
   if(unpack(field,record,usn)){
-    cout<<"sear\n";
     //display
     printHeader();
     for(auto& str: field){
@@ -190,6 +189,6 @@ void modify(){
   cout<<setw(50)<<"Done record updated!";
 }
 void printHeader(){
-  cout<<setw(15)<<"Name"<<setw(15)<<"USN"<<setw(15)<<"Age"<<setw(15)<<"semester"<<setw(15)<<"Branch"<<endl;
+  cout<<setw(15)<<"NAME"<<setw(15)<<"USN"<<setw(15)<<"AGE"<<setw(15)<<"SEMESTER"<<setw(15)<<"BRANCH"<<endl;
   cout<<"-------------------------------------------------------------------------------\n";
 }

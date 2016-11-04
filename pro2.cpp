@@ -38,6 +38,7 @@ int main(){
      default: cerr<<"\nInvalid input!";break;
      }
   }
+  return 0;
 }
 
 void pack(){

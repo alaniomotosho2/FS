@@ -35,7 +35,7 @@ int main()
   //condition is true until user enter zero
   while(1){
     cout<<"\nO:exit\n 1: write to file\n 2:display the file"<<"\n 3:modify the file\n 4:search By RRN";
-     cout<<"\n\n Enter your choice:>>\t"; cin>>yourChoice;
+     cout<<"\n\n Enter your choice:? "; cin>>yourChoice;
      switch(yourChoice)
      {
      case 1: student.pack();break;
@@ -46,6 +46,7 @@ int main()
      //default: cerr<<"\nInvalid input!";break;
      }
   }
+  return 0;
 }
 
 void Student::pack(){

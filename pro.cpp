@@ -1,3 +1,5 @@
+#include <exception>
+#include <stdexcept>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,16 +15,30 @@ void getNames(vector<string>&, string [], int);
 int main()
 {
   int ch;
- do{
-  cout<<"\n1. Std. I/O\n2.User File I/O\n3. Exit\n\t\tEnter your choice\n";
-  cin>>ch;
-  switch(ch)
-  {
-   case 1: std_io(); break;
-   case 2: usr_io(); break;
-   case 3: exit(0);
-  }
- }while(ch<=3);
+ try{
+   do{
+    cout<<"\n1. Std. I/O\n2.User File I/O\n3. Exit\n\t\tEnter your choice\n";
+    cin>>ch;
+    if(cin.fail()){
+      cin.clear();
+      cin.ignore();
+      cerr<<setw(50)<<"Bad Input! Enter Your Choice again?"<<endl;
+      cout<<"\n1. Std. I/O\n2.User File I/O\n3. Exit\n\t\tEnter your choice\n";
+      cin>>ch;
+      //throw runtime_error("Bad Input!");
+    }
+    switch(ch)
+    {
+     case 1: std_io(); break;
+     case 2: usr_io(); break;
+     case 3: exit(0);
+    }
+   }while(ch<=3);
+ }catch(...){
+   cerr<<setw(50)<<"You must enter a valid choice!!!";
+   exit(0);
+ }
+ return 0;
 }
 
 void std_io(){

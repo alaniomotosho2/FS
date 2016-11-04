@@ -42,6 +42,7 @@ int main()
      default: cerr<<setw(30)<<"\nInvalid input!";break;
      }
   }
+  return 0;
 }
 
 void printHeader(){

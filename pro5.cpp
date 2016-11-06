@@ -1,4 +1,5 @@
 #include <exception>
+#include <sstream>
 #include <stdexcept>
 #include <iostream>
 #include <string>
@@ -17,10 +18,11 @@ public:
   string mySem;
   void add();
   size_t getIndex_Count();
-  void unpack(vector<string>&,string);
+  vector<string> unpack(vector<string>&);
   void printHeader();
-  void print_item(string);
-  //void search(string usn);//usm bumber as parameter
+  vector<string> get_packed_item(fstream&);
+  void search();//usm bumber as parameter
+  void display_items(vector<string>&);
   //void delete();
   //void modify();
 };
@@ -98,8 +100,10 @@ size_t Record::getIndex_Count(){
 void Record::search(){
   fstream fin("index.dat",fstream::in);//use index for performance
   vector<string> items;
+  vector<string> packed_item {};
+  vector<string> unpacked_items {};
   Record student;
-  cout<<"Enter records usn you want to search :>>\t";
+  cout<<"Enter records usn you want to search :?";
   string usn;
   cin>>usn;
   if(!fin){
@@ -108,11 +112,23 @@ void Record::search(){
   }
   fin.close();
 string record;
+while(fin>>record){
+  items.push_back(record)
+}
+int search_loc = find_ssn(items);
+/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+//start here next time
 while(fin >> record){
   items.push_back(record);
-  if(item.at(0) == usn){
-    fstream fout_data("record.dat",fstream::app);//record found
-    unpack(item);
+  unpacked_items = unpack(items);
+  if(unpacked_items.at(0) == usn){
+    fin.close();
+    fstream fout_data("record.dat",fstream::in);//record found
+    packed_item  = get_packed_item(fout_data);
+    unpacked_items = unpack(packed_item);
+    display_items(unpacked_items);
+    fout_data.close();
     return;//terminate the function
   }
   items.clear();//clear the container
@@ -120,26 +136,43 @@ while(fin >> record){
 cout<<setw(50)<<"Record Not Found!"<<endl;
 }
 
-void Record::unpack(vector<string>& items){
+vector<string> Record::unpack(vector<string>& items){
   printHeader();
-  for(auto&  item : items){
-    string ite = item;
-    print_item(item);
-  }
-}
-
-void print_item(string item){
   stringstream stream;
-  stream<<item;
+  vector <string> unpacked_items{};
   string temp;
-  while(getline(stream,temp,'|')){
-    cout<<setw(15)<<temp;
+  string string_item;
+  for(auto&  item : items){
+    string_item = item;
+    stream<<string_item;
+    //unpacking
+    while(getline(stream,temp,'|')){
+      unpacked_items.push_back(temp);
+      //cout<<setw(15)<<temp;
+    }
+    unpacked_items.push_back("\n");
+    stream.clear();//clear stream for the next input
+    stream.str("");
+    cout<<endl;
   }
-  stream.clear();
-  stream.str("");
+  return unpacked_items;//copy unpacked to the parameter sent
 }
 
 
+vector<string> Record::get_packed_item(fstream& fout_data){
+  std::vector<string> v{};
+  string record;
+  while(fout_data>>record){
+    v.push_back(record);
+  }
+  return v;
+}
+
+void Record::display_items(vector<string>& items){
+  for(auto item : items){
+    cout<<setw(15)<<item;
+  }
+}
 void Record::printHeader(){
   cout<<setw(15)<<"NAME"<<setw(15)<<"USN"<<setw(15)<<"AGE"<<setw(15)<<"SEMESTER"<<setw(15)<<"BRANCH"<<endl;
   cout<<"-------------------------------------------------------------------------------\n";

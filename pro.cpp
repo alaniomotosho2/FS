@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include <algorithm>
 #include <fstream>
 using namespace std;
 void reverseName(string&);
@@ -14,6 +13,7 @@ void usr_io();
 void getNames(vector<string>&, string [], int);
 int main()
 {
+  cout<<"\n\n"<<internal<<setw(80)<<"Programs to implementing I/O redirection and pipe\n\n";
   int ch;
  try{
    do{
@@ -45,7 +45,7 @@ void std_io(){
   cout<<"Enter The number of names: ? ";
   int num;
   cin>>num;
-  cout<<"Enter name :";
+  //cout<<"Enter name :?";
   string name[num];
   vector<string> nameList(num);
   //reuse this function
@@ -54,7 +54,7 @@ void std_io(){
   cout<<setw(50)<<"The reversed names are :";
   for(auto& myName: nameList){
     reverseName(myName);
-    cout<<setw(15)<<setw(15)<<myName<<endl;
+    cout<<setw(50)<<myName<<endl;
   }
 }
 
@@ -116,10 +116,10 @@ void reverseName(string& itsName){
 }
 //reusable function
 void getNames(vector<string>& nameList,string name[],int num){
-  cout<<"? ";
+  cout<<"Enter Name? ";
   for(int i =0; i < num; i++){
     cin>>name[i];
-    cout<<" ? ";
+    cout<<"Enter Again ? ";
     nameList.push_back(name[i]);
   }
 }

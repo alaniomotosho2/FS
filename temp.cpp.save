@@ -1,0 +1,14 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+int main(){
+char name[5],age[5];
+cin.get(name,5,'#');
+while(cin
+cin.clear();cin.ignore();cin.get();
+cin.get(age,5,'#');
+string  yu = string(name);
+yu  += "|"+string(age);
+cout<<yu;
+}

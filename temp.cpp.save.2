@@ -4,10 +4,10 @@
 #include <string>
 using namespace std;
 int main(){
-char name[10],age[10];
-cin.getline(name,10,'\n');
-cin.clear();
+char name[5],age[5];
+cin.getline(name,25,'#');
+std::cin.clear();
 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-cin.getline(age,10,'\n');
+cin.gelt(age,25,'#');
 cout<<name<<"\t"<<age;
 }

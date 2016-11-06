@@ -21,8 +21,10 @@ int unpack(vector<string>&,string,string);
 void modify();
 int main()
 {
+    cout<<"\n\n"<<internal<<setw(120)<<"variable Lenght Record programs with fields delimited by '|'implementing pack, unpack, search and modify\n";
+    cout<<internal<<setw(80)<<"Hash (#) signify end of each record\n\n";
   fstream fout("student2.dat",fstream::app);
-  if(!fout){
+  if(not fout){
     cerr<<setw(50)<<"File could not be opened!";
     exit(0);//exit succesfully
   }
@@ -31,7 +33,7 @@ int main()
   //condition is true until user enter zero
   while(1){
     cout<<setw(30)<<"\nO:exit\n 1: write to file\n 2:display the file"<<"\n 3:modify the file\n 4:search";
-     cout<<setw(30)<<"\n\n Enter your choice:>>\t"; cin>>yourChoice;
+     cout<<setw(30)<<"\n\n Enter your choice?"; cin>>yourChoice;
      switch(yourChoice)
      {
      case 1: pack();break;
@@ -54,15 +56,15 @@ void pack(){
   fstream fout("student2.dat",fstream::app);//open file in append mode
   Student student;
   string record;
-  if(!fout){
+  if(not fout){
     cerr<<"File not exist!";
     exit(0);
   }
-  cout<<"\nEnter the student name = "; cin>>student.myName;
-  cout<<"\nEnter the usn = "; cin>>student.myUSN;
-  cout<<"\nEnter the age = "; cin>>student.myAge;
-  cout<<"\nEnter the sem = "; cin>>student.mySem;
-  cout<<"\nEnter the branch = "; cin>>student.myBranch;
+  cout<<"\nEnter the student name ?"; cin>>student.myName;
+  cout<<"\nEnter the usn ?"; cin>>student.myUSN;
+  cout<<"\nEnter the age ? "; cin>>student.myAge;
+  cout<<"\nEnter the sem ?"; cin>>student.mySem;
+  cout<<"\nEnter the branch ?"; cin>>student.myBranch;
   //pack information
   record = student.myName+"|"+student.myUSN+"|"+student.myAge+"|"+student.mySem+"|"+student.myBranch+"#";
   fout<<record<<endl;
@@ -106,7 +108,7 @@ void search(){
   fstream fin("student2.dat",fstream::in);
   vector<string> field;
   Student student;
-  cout<<"Enter records usn you want to search :>>\t";
+  cout<<"Enter records usn you want to search ?";
   string usn;
   cin>>usn;
   if(!fin){
@@ -125,7 +127,7 @@ while(fin>>record){
     return; //search found exit the function
   }
 }
-cout<<setw(50)<<"\nRecord Not Found!\t";
+cout<<setw(50)<<"\nRecord Not Found!";
 }
 
 
@@ -158,11 +160,11 @@ int unpack(vector<string>& field,string record,string usn){
 
 void modify(){
   fstream fin("student2.dat",fstream::in);
-  if(!fin){
+  if(not fin){
     cerr<<"file could not be opened!";
     return;
   }
-  cout<<"Enter USSN of the record you want to update>>  ";
+  cout<<"Enter USSN of the record you want to update?";
   string usn;
   cin>>usn;
   vector<string> field;
@@ -175,35 +177,37 @@ void modify(){
   while(fin>>record){
 
     field.push_back(record);
+    string cont;
     tempField.push_back(record);
-    if(!status){
+    if(not status){
       if(unpack(tempField,record,usn)){
         status =1;
         printHeader();
         searBuffer<<record;
         while(getline(searBuffer,temp,'|')){
-          cout<<setw(15)<<temp;
+          cont = string(temp.begin(),temp.end()-1);//this offer a lot of prospect to reduce my code
+          cout<<setw(15)<<cont;
         }
 
       }
     }
 
-    if(!status){
+    if(not status){
       recordLocation +=1;//this record usn has to be unique else ir changes the last one
     }
   }
   fin.close();
-  if(!status){
+  if(not status){
     cerr<<setw(50)<<"No match found for the USSN!";
     return;
   }
   Student student;
   cout<<"\nEnter new values :\n";
-  cout<<"Name :>>";cin>>student.myName;
-  cout<<"USN :>>";cin>>student.myUSN;
-  cout<<"Age :>>";cin>>student.myAge;
-  cout<<"Semester:>>";cin>>student.mySem;
-  cout<<"Branch:>>";cin>>student.myBranch;
+  cout<<"Name :?";cin>>student.myName;
+  cout<<"USN :?";cin>>student.myUSN;
+  cout<<"Age :?";cin>>student.myAge;
+  cout<<"Semester:?";cin>>student.mySem;
+  cout<<"Branch:?";cin>>student.myBranch;
   //reuse record variable
   record = student.myName+"|"+student.myUSN+"|"+student.myAge+"|"+student.mySem+"|"+student.myBranch+"#";
   //change the old record in memeory before written to this back

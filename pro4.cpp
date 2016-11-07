@@ -26,7 +26,7 @@ int main()
 {
   Student student;
   fstream fout("student3.dat",fstream::app);
-  if(!fout){
+  if(not fout){
     cerr<<setw(50)<<"File could not be opened!";
     exit(0);//exit succesfully
   }
@@ -51,8 +51,8 @@ int main()
 
 void Student::pack(){
   int rrnCount = getRCount();
-  fstream fout("student3.dat",fstream::app);
-  if(!fout){
+  fstream fout("student3.dat",fstream::out|fstream::app);
+  if(not fout){
     cerr<<setw(50)<<"File could not be opened!";
   }
   cout<<"\nEnter the student Id :? "; cin>>myId;
@@ -68,7 +68,7 @@ void Student::pack(){
 
 int Student::getRCount(){
   fstream fin("student3.dat",fstream::in);
-  if(!fin){
+  if(not fin){
     cerr<<setw(50)<<"File Could Not be Opened!";
   }
 
@@ -93,7 +93,7 @@ int Student::getRCount(){
 void Student::unpack(){
   vector<string> buffer;
   fstream fin("student3.dat",fstream::in);
-  if(!fin){
+  if(not fin){
     cerr<<setw(50)<<"File could not be opened!";
     return;
   }
@@ -128,7 +128,7 @@ int Student::search_rrn(vector<string>& query, int rrn){
   string record;
   stringstream streamBuffer;
   fstream fin("student3.dat",fstream::in);
-  if(!fin){
+  if(not fin){
     cerr<<setw(50)<<"File could Not be opened!";
     exit(0);
   }

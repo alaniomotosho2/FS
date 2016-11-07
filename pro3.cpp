@@ -53,7 +53,7 @@ void printHeader(){
 }
 
 void pack(){
-  fstream fout("student2.dat",fstream::app);//open file in append mode
+  fstream fout("student2.dat",fstream::out|fstream::app);//open file in append mode
   Student student;
   string record;
   if(not fout){
@@ -185,8 +185,11 @@ void modify(){
         printHeader();
         searBuffer<<record;
         while(getline(searBuffer,temp,'|')){
-          cont = string(temp.begin(),temp.end()-1);//this offer a lot of prospect to reduce my code
-          cout<<setw(15)<<cont;
+          if(temp.at(temp.size()-1) == '#'){
+            cont = string(temp.begin(),temp.end()-1);//this offer a lot of prospect to reduce my code
+            temp = cont;
+          }
+          cout<<setw(15)<<temp;
         }
 
       }

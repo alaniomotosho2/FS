@@ -7,24 +7,28 @@
 using namespace std;
 class Re{
 	public:
-	string name;
-	string age;
+	char ar1[25];
+	char ar2[25];
 };
-istream& writeFunc(istream&,Re);
+
 int main()
 {
-fstream fout("rak.dat",fstream::in|fstream::binary);
+string in, an;
+fstream fout("sch.dat",fstream::in|fstream::binary);
 Re re;
-
-fout.seekg(2*(sizeof(Re)));
-writeFunc(fout,re);
-
-cout<<"Done";
+fout.read(reinterpret_cast<char*>(&re),sizeof(Re));
+cout<<re.ar1<<"\t"<<re.ar2<<endl;
+/*
+for(int i =0; i <3; i++)
+{
+cout<<"Enter name :?";
+cin>>in;
+in.copy(re.ar1,0,7);
+cout<<"Enter age?";
+cin>>an;
+an.copy(re.ar2,0,7);
+fout.write(reinterpret_cast<char*>(&re),sizeof(Re));
+}*/
 return 0;
 }
 
-istream& writeFunc(istream& out, Re re){
-
-out.read(reinterpret_cast<char*>(&re),sizeof(Re));
-cout<<re.name<<"\t"<<re.age<<endl;
-}

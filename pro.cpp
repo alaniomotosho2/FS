@@ -77,9 +77,11 @@ void usr_io(){
   streambuf*  cinBuf = cin.rdbuf();//save old input buffer before Redirection
   streambuf* coutBuf = cout.rdbuf();//save old output buffer before redirection
   cout.rdbuf(outFile.rdbuf());//redirect stdout
-  for(auto& myName : nameList ){
-    cout<<myName<<" ";
-  }
+  string buffer = nameList.at(0)+"|"+nameList.at(1);
+  /*for(auto& myName : nameList ){
+    cout<<myName<<
+  }*/
+  cout<<buffer<<endl;
   cout<<endl;
   outFile.close();
   string nameToreverse;

@@ -4,6 +4,10 @@
 #include <fstream>
 #include <limits>
 #include <vector>
+#include <cstring>
+#include <sstream>
+#include <array>
+#include <map>
 using namespace std;
 class Re{
 	public:
@@ -12,10 +16,18 @@ class Re{
 
 int main()
 {
-Re ra[2];
-ra[0].name = "Mustapha";
-ra[1].name = "Teng";
-cout<<&ra[0].name<<" "<<&ra[1].name<<endl;
+map<int,string> m;
+m[1] = "mustapha";
+m[2] = "Serifat";
+m[3] = "Chidinma";
+for(auto& i : m){
+cout<<i.first<<":"<<i.second<<endl;
+m.erase(1);
+}
+for(auto & r: m)
+{
+cout<<r.first<<":"<<r.second<<endl;
+}
 return 0;
 }
 

@@ -27,7 +27,7 @@ void arrange_index(string&, int&);
 int main()
 {
   int yourChoice;
-  cout<<setw(120)<<"\n\nSimple index on a primary key implementing add(),display(),search() and delete()\n\n";
+  cout<<setw(80)<<"\n\nSimple index on a primary key implementing add(),display(),search() and delete()\n\n";
   try{
     while(1){
       cout<<"\nO:exit\n 1: Add Record(s)\n 2:Display Records"<<"\n 3:search Records\n 4:Delete Records ";

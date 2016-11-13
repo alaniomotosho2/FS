@@ -30,7 +30,7 @@ void update_index(int);
 int main()
 {
   int yourChoice;
-  cout<<setw(80)<<"Simple index on a primary key implementing add(),display(),search() and delete()\n\n";
+  cout<<setw(120)<<"Simple index on a primary key implementing add(),display(),search() and delete()\n\n";
 
   while(1){
     cout<<"\nO:exit\n 1: Add Record(s)\n 2:Display Records"<<"\n 3:search Records\n 4:Delete Records ";

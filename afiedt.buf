@@ -1,0 +1,12 @@
+create table employees
+empno number(4) not null,
+ename varchar2(8) not null,
+init varchar2(5) not null,
+job varchar2(8) not null,
+mgr number(4),
+bdate date,
+msal number(6,2),
+comm number(6,2),
+deptno number(2)
+)
+/

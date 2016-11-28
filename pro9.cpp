@@ -76,8 +76,8 @@ void BTreeNode::traverse()
 {
 	// There are n keys and n+1 children, travers through n keys
 	// and first n children
+	cout<<endl;
 	int i;
-  cout<<"[";
 	for (i = 0; i < n; i++)
 	{
 		// If this is not leaf, then before printing key[i],
@@ -86,10 +86,11 @@ void BTreeNode::traverse()
 			C[i]->traverse();
 		cout<< " " << keys[i];
 	}
-cout<<" ]";
 	// Print the subtree rooted with last child
-	if (leaf == false)
+	if (leaf == false){
 		C[i]->traverse();
+	}
+	cout<<endl;
 }
 
 // Function to search key k in subtree rooted with this node
@@ -270,7 +271,7 @@ int main()
     	t.traverse();
       break;
       default:
-      exit(0);
+      break;
 
     }
   }

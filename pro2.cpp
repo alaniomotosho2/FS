@@ -9,30 +9,22 @@
 using namespace std;
 class Student{
 public:
-  //char name[15];char usn[15];char age[5];char sem[5];char branch[15];char buffer[60];
   array<char,15> name;array<char,15> usn;array<char,5> age;array<char,5> sem; array<char,15> branch;
-  //vector<char> buffer1(60);
 };
 inline void cleanInput_stream();//we call it many time so we make it inline for perfomance gain
-void pack();//function to add records
-void search();//search
+void pack();
+void search();
 int unpack(vector<string>&,string,string);
 void displayFile();
 void modify();
 void printHeader();
 int main(){
 
-  cout<<"\n\n"<<internal<<setw(120)<<"Fixed Lenght Record programs with fields delimited by '|'implementing pack, unpack, search and modify\n\n";
-  fstream fout("student.dat",fstream::app);
-  if(not fout){
-    cerr<<setw(50)<<"File could not be opened!";
-    exit(0);//exit succesfully
-  }
-  fout.close();//file exit, now we can open it again for append in pack function
+  cout<<"\n\nFixed Lenght Record programs with fields delimited by '|'implementing pack, unpack, search and modify\n\n";
   int yourChoice;
   //condition is true until user enter zero
   while(1){
-    cout<<"\nO:exit\n 1: write to file\n 2:display the file"<<"\n 3:modify the file\n 4:search";
+    cout<<"\n O: exit\n 1: write to file\n 2: display the file"<<"\n 3: modify the file\n 4: search usn";
      cout<<"\n\n Enter your choice ?"; cin>>yourChoice;
      switch(yourChoice)
      {
@@ -48,32 +40,30 @@ int main(){
 }
 
 void pack(){
-  fstream fout("student.dat",fstream::app);//open file in append mode
+  fstream fout("student.dat",fstream::out|fstream::app);//open file in append mode
   Student student;
   string record;
   if(not fout){
     cerr<<setw(50)<<"File not exist!";
-    exit(0);
+    return;
   }
   cleanInput_stream();
-  cout<<"\nEnter the student name ?";//cin>>student.name;
+  cout<<"\nEnter the student name ?";
   cin.get(student.name.data(),student.name.size());
   cleanInput_stream();
-  cout<<"\nEnter the usn ?";//cin>>student.usn;
+  cout<<"\nEnter the usn ?";
   cin.get(student.usn.data(),student.usn.size());
   cleanInput_stream();
-  cout<<"\nEnter the age ?";//cin>>student.age;
+  cout<<"\nEnter the age ?";
   cin.get(student.age.data(),student.age.size());
   cleanInput_stream();
-  cout<<"\nEnter the sem ?";//cin>>student.sem,5;
+  cout<<"\nEnter the sem ?";
   cin.get(student.sem.data(),student.sem.size());
   cleanInput_stream();
-  cout<<"\nEnter the branch ?";//cin>>student.branch;
+  cout<<"\nEnter the branch ?";
   cin.get(student.branch.data(),student.branch.size());
   cleanInput_stream();
-  //pack information
   record =  string(student.name.data())+"|"+ string(student.usn.data())+"|"+string(student.age.data())+"|"+string(student.sem.data())+"|"+string(student.branch.data());
-  //record = static_cast<string>(student.name)+"|"+static_cast<string>(student.usn)+"|"+static_cast<string>(student.age)+"|"+static_cast<string>(student.sem)+"|"+static_cast<string>(student.branch);
   fout<<record<<endl;
   fout.close();
   cout<<setw(50)<<"Done Record addeded!";
@@ -89,18 +79,17 @@ void search(){
   cleanInput_stream();
   if(!fin){
     cerr<<"Unable to open file";
-    exit(0);//exit with success status
+    return;
   }
 string record;
 while(fin>>record){
   if(unpack(search_record,record,usn)){
-    //display
     printHeader();
     for(auto& str: search_record){
       cout<<setw(15)<<str<<setw(15);
     }
     cout<<endl;
-    return; //search found exit the function
+    return;
   }
 }
 cout<<setw(50)<<"Record Not Found!";
@@ -113,7 +102,6 @@ int unpack(vector<string>& search_record,string record,string usn){
   vector<string> temp_list{};
   string temp;
   while(getline(searBuffer,temp,'|')){
-    //search_record.push_back(temp);
     temp_list.push_back(temp);
   }
   searBuffer.clear();
@@ -123,7 +111,7 @@ int unpack(vector<string>& search_record,string record,string usn){
     return 1;
   }
 
-  search_record.clear();//clear the vector for another input
+  search_record.clear();
   return 0;
 }
 
@@ -183,7 +171,7 @@ void modify(){
     }
 
     if(status == 0){
-      recordLocation +=1;//this record usn has to be unique else ir changes the last one
+      recordLocation +=1;//this record usn has to be unique else it changes the last one
     }
   }
   fin.close();
@@ -211,8 +199,6 @@ void modify(){
   cleanInput_stream();
   //reuse record variable
   record =  string(student.name.data())+"|"+ string(student.usn.data())+"|"+string(student.age.data())+"|"+string(student.sem.data())+"|"+string(student.branch.data());
-  //record = static_cast<string>(student.name)+"|"+static_cast<string>(student.usn)+"|"+static_cast<string>(student.age)+"|"+static_cast<string>(student.sem)+"|"+static_cast<string>(student.branch);
-  //change the old record in memeory before written to this back
   record_list.at(recordLocation) = record;//update the record
   fstream fout("student.dat",fstream::out);
   for(auto& rcd: record_list){
@@ -222,7 +208,7 @@ void modify(){
 }
 void printHeader(){
   cout<<setw(15)<<"NAME"<<setw(15)<<"USN"<<setw(15)<<"AGE"<<setw(15)<<"SEMESTER"<<setw(15)<<"BRANCH"<<endl;
-  cout<<"-------------------------------------------------------------------------------\n";
+  cout<<"------------------------------------------------------------------------------------\n";
 }
 
 inline void cleanInput_stream(){

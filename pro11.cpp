@@ -18,8 +18,9 @@ void retrieve_record();
 bool check_collision(size_t);
 void printHeader();
 int main(){
-  hash_table.resize(1000);//we set the hash table high to avoid collision
+  hash_table.resize(hash_size);//we set the hash table high to avoid collision
   cout<<setw(70)<<"\nPrograms to implement hashing with collision resolution\n";
+  cout<<setw(70)<<"\nusing open addressing collision techniques (Linear probing)\n";
   int your_choice;
   while(1){
     cout<<"\n 1: store records\n 2: retrieve records\n 3: exit\n";
@@ -46,20 +47,21 @@ void store_record(){
   string buffer = student.key +"|"+student.name+"|"+student.sem;
   fout<<buffer<<endl;
   size_t hash_value =  get_hash(student.key);
-  //////////////////
-  cout<<"1 is "<<hash_value<<endl;
   bool is_collision =  check_collision(hash_value);
   if(is_collision == false){
     hash_table.at(hash_value) = buffer;
   }else{
+    cout<<"there is collision we will use open addressing techniques called linear probing\n";
     for(int i= hash_table.size()-1;i >=0; i--){
-      if(not hash_table.at(i).empty()){
+      if(hash_table.at(i).empty()){
         ///put the name of collision here
         hash_table.at(i) = buffer;
+        break;
       }
     }
+    cout<<setw(30)<<"hash table is fool!\n";
   }
-  cout<<setw(40)<<"Done record has been Hashed!\n";
+  cout<<setw(40)<<"key ahs been hashed and stored in its home address!\n";
   fout.close();
 }
 size_t get_hash(string key){
@@ -75,10 +77,8 @@ void retrieve_record(){
   string key;
   cin>>key;
   size_t hash_value = get_hash(key);
-  ////////////////////////
-  cout<<"2 is "<<hash_value<<endl;
   if(hash_table.at(hash_value).empty()){
-    cout<<"Record not found in hash table!";
+    cout<<setw(30)<<"Key not found in hash table!";
     return;
   }
   string record = hash_table.at(hash_value);

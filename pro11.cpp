@@ -1,4 +1,4 @@
-#include<vector>
+#include <vector>
 #include <sstream>
 #include <iostream>
 #include <string>
@@ -16,6 +16,7 @@ void store_record();
 size_t get_hash(string);
 void retrieve_record();
 bool check_collision(size_t);
+void printValue(string);
 void printHeader();
 int main(){
   hash_table.resize(hash_size);//we set the hash table high to avoid collision
@@ -23,7 +24,7 @@ int main(){
   cout<<setw(70)<<"\nusing open addressing collision techniques (Linear probing)\n";
   int your_choice;
   while(1){
-    cout<<"\n 1: store records\n 2: retrieve records\n 3: exit\n";
+    cout<<"\n1: store records ? \n2: retrieve records ? \n3: exit ?";
     cin>>your_choice;
     switch (your_choice){
       case 1:
@@ -51,17 +52,17 @@ void store_record(){
   if(is_collision == false){
     hash_table.at(hash_value) = buffer;
   }else{
-    cout<<"there is collision we will use open addressing techniques called linear probing\n";
+    cout<<"there is collision we record will be stored using available space after its home address!";
     for(int i= hash_table.size()-1;i >=0; i--){
       if(hash_table.at(i).empty()){
         ///put the name of collision here
         hash_table.at(i) = buffer;
-        break;
+        return;
       }
     }
-    cout<<setw(30)<<"hash table is fool!\n";
+    cout<<setw(30)<<"hash table is full!\n";
   }
-  cout<<setw(40)<<"key ahs been hashed and stored in its home address!\n";
+  cout<<setw(40)<<"key hashed and stored in its home address!\n";
   fout.close();
 }
 size_t get_hash(string key){
@@ -76,12 +77,25 @@ void retrieve_record(){
   cout<<"Enter the key of record to retrieve ?";
   string key;
   cin>>key;
+  string record;
   size_t hash_value = get_hash(key);
-  if(hash_table.at(hash_value).empty()){
-    cout<<setw(30)<<"Key not found in hash table!";
-    return;
+  int si = hash_table.size()-1;
+  for(int  i = si; i >=0; i--){
+    if(hash_table.at(i).empty()){
+      continue;
+    }
+      if(hash_table.at(i).substr(0,hash_table.at(hash_value).find_first_of('|')) == key){
+        //cout<<hash_table.at(hash_value).substr(0,hash_table.at(hash_value).find_first_of('|'));exit(0);
+        record  = hash_table.at(i);
+        printValue(record);
+        return;
+      }
   }
-  string record = hash_table.at(hash_value);
+    cout<<setw(30)<<"Key not found in hash table!";
+  }
+
+void printValue(string record){
+  //string record = hash_table.at(hash_value);
   printHeader();
   stringstream stream;
   stream<<record;
@@ -90,7 +104,6 @@ void retrieve_record(){
     cout<<setw(20)<<temp;
   }
   stream.clear();stream.str("");
-
 }
 
 bool check_collision(size_t hash_value){

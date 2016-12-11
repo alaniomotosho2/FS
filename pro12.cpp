@@ -10,15 +10,16 @@ using namespace std;
    string name;
    Student* next;
  };
- void insert();
- string pack(Student*);
- void insert_link(string,string);
- void display();
- void delete_record();
- void writeFile();
- void insert_at_slot();
- Student* Head = NULL;
+ void insert();//write to file and create linked list
+ string pack(Student*);//pack Student type as a string
+ void insert_link(string,string);//insert packed field into linked list
+ void display();//display linked list
+ void delete_record();//delete a link or node from linked list
+ void writeFile();//write updated linked list to file
+ void insert_at_slot();//insert at empty node or link
+ Student* Head = NULL;//link or node head is pointing to nothing at the beginning
  Student student;
+ //program entry point
  int main(){
    int your_choice;
 while(1){
@@ -39,23 +40,26 @@ while(1){
     insert_at_slot();
     break;
     case 5:
-    exit(0);
+    exit(0);//exit with success status
   }
 }
+return 0;//entry point is void...we return 0
  }
 
  void insert(){
-   fstream fout("node.dat",fstream::out);
+   fstream fout("node.dat",fstream::out);//logical file
    cout<<"Enter usn ?";cin>>student.usn;
    cout<<"Enter name ?";cin>>student.name;
    student.next = NULL;
    insert_link(student.usn,student.name);
+   //link Header is always NULL at the beginning
    Student* node = Head;
    string buffer;
+   //update file using content of linked list
    while(node){
-     buffer = pack(node);
+     buffer = pack(node);//packed the field before writing to file
      fout<<buffer<<endl;
-     node = node->next;
+     node = node->next;//next link if any
    }
    cout<<setw(30)<<"Record added and  Linked!\n";
    fout.close();
@@ -69,7 +73,7 @@ while(1){
    stud->usn = usn;
    stud->name = name;
    stud->next = NULL;
-   if(Head == NULL){
+   if(Head == NULL){//test if link is null
      Head = stud;
      return;
    }
@@ -92,11 +96,11 @@ void delete_record(){
   Student* st;
   st = Head;
   while(st){
-    if(st->usn == usn){
-      st->usn = "*";
+    if(st->usn == usn){//if usn to be deleted found
+      st->usn = "*";//mark the record by special symbol signifying deletion
       st->name = "*";
       cout<<setw(30)<<"Record Deleted!\n";
-      writeFile();
+      writeFile();//update the file
       return;
     }
     st = st->next;
@@ -105,6 +109,7 @@ void delete_record(){
 }
 
 void writeFile(){
+  //update file with linked list
   remove("node.dat");
   fstream fout("node.dat",fstream::out|fstream::app);
   Student* st;
@@ -118,7 +123,7 @@ void writeFile(){
   fout.close();
 }
 
-void insert_at_slot(){
+void insert_at_slot(){//insert into empty slot if any
   cout<<"Enter usn to be inserted ?";
   string usn;
   cin>>usn;
@@ -132,10 +137,11 @@ void insert_at_slot(){
       ptr->name = name;
       cout<<setw(30)<<"Record Inserted at an empty location!\n";
       writeFile();
-      return;
+      return;//return after insertion into empty slot
     }
     ptr = ptr->next;
   }
+  //no empty slot insert at the rear
   Student * ptr1 = new Student();
   cout<<setw(30)<<"No empty slot...record will be placed at the rear\n";
   ptr1->usn = usn;ptr1->name = name;

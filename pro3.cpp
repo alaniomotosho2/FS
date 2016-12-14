@@ -7,12 +7,13 @@
 using namespace std;
 class Student{
 public:
+  //variable length field
   string myName;
   string myUSN;
   string myAge;
   string mySem;
   string myBranch;
-};//always add semi colom
+};
 void printHeader();
 void pack();
 void displayFile();
@@ -23,16 +24,10 @@ int main()
 {
     cout<<"\n\n"<<internal<<setw(120)<<"variable Lenght Record programs with fields delimited by '|'implementing pack, unpack, search and modify\n";
     cout<<internal<<setw(80)<<"Hash (#) signify end of each record\n\n";
-  fstream fout("student2.dat",fstream::app);
-  if(not fout){
-    cerr<<setw(50)<<"File could not be opened!";
-    exit(0);//exit succesfully
-  }
-  fout.close();//file exit, now we can open it again for append in pack function
   int yourChoice;
   //condition is true until user enter zero
   while(1){
-    cout<<setw(30)<<"\nO:exit\n 1: write to file\n 2:display the file"<<"\n 3:modify the file\n 4:search";
+    cout<<setw(30)<<"\nO: exit \n1: write to file \n2: display the file"<<"\n3: modify the file\n4: search";
      cout<<setw(30)<<"\n\n Enter your choice?"; cin>>yourChoice;
      switch(yourChoice)
      {
@@ -84,12 +79,11 @@ void displayFile(){
       while(getline(searBuffer,temp,'|')){
         field.push_back(temp);
       }
-      //i want to strip record delimeter---this method not the best but get the job done
       searBuffer.clear();
       searBuffer.str("");
       temp = field.at(field.size()-1);
       searBuffer<<temp;
-      while(getline(searBuffer,temp,'#')){
+      while(getline(searBuffer,temp,'#')){//strip record delimeter
         field.at(field.size()-1) = temp;
       }
 
@@ -135,11 +129,10 @@ int unpack(vector<string>& field,string record,string usn){
   stringstream searBuffer;
   searBuffer<<record;
   string temp;
-  while(getline(searBuffer,temp,'|')){
+  while(getline(searBuffer,temp,'|')){//strip field delimeter
     field.push_back(temp);
   }
 
-  //i want to strip record delimeter---this method not the best but get the job done
   searBuffer.clear();
   searBuffer.str("");
   temp = field.at(field.size()-1);
@@ -154,8 +147,8 @@ int unpack(vector<string>& field,string record,string usn){
       return 1;
     }
   }
-  field.clear();//clear the vector for another input
-  return 0;//match not found
+  field.clear();//clear the container for another input
+  return 0;//match not foun
 }
 
 void modify(){
@@ -164,7 +157,7 @@ void modify(){
     cerr<<"file could not be opened!";
     return;
   }
-  cout<<"Enter USSN of the record you want to update?";
+  cout<<"Enter USN of the record you want to update?";
   string usn;
   cin>>usn;
   vector<string> field;
@@ -186,7 +179,7 @@ void modify(){
         searBuffer<<record;
         while(getline(searBuffer,temp,'|')){
           if(temp.at(temp.size()-1) == '#'){
-            cont = string(temp.begin(),temp.end()-1);//this offer a lot of prospect to reduce my code
+            cont = string(temp.begin(),temp.end()-1);
             temp = cont;
           }
           cout<<setw(15)<<temp;
@@ -211,9 +204,8 @@ void modify(){
   cout<<"Age :?";cin>>student.myAge;
   cout<<"Semester:?";cin>>student.mySem;
   cout<<"Branch:?";cin>>student.myBranch;
-  //reuse record variable
   record = student.myName+"|"+student.myUSN+"|"+student.myAge+"|"+student.mySem+"|"+student.myBranch+"#";
-  //change the old record in memeory before written to this back
+  //change the old record in memeory before updating the file
   field.at(recordLocation) = record;//update the record for the given location
   fstream fout("student2.dat",fstream::out);
   for(auto& rcd: field){

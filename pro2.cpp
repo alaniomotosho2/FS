@@ -9,6 +9,7 @@
 using namespace std;
 class Student{
 public:
+  //impose fixed length on each field of the records
   array<char,15> name;array<char,15> usn;array<char,5> age;array<char,5> sem; array<char,15> branch;
 };
 inline void cleanInput_stream();//we call it many time so we make it inline for perfomance gain
@@ -50,7 +51,7 @@ void pack(){
   cleanInput_stream();
   cout<<"\nEnter the student name ?";
   cin.get(student.name.data(),student.name.size());
-  cleanInput_stream();
+  cleanInput_stream();//clean the input stream so that next reading wont read dirty input
   cout<<"\nEnter the usn ?";
   cin.get(student.usn.data(),student.usn.size());
   cleanInput_stream();
@@ -63,6 +64,7 @@ void pack(){
   cout<<"\nEnter the branch ?";
   cin.get(student.branch.data(),student.branch.size());
   cleanInput_stream();
+  //packing the fields
   record =  string(student.name.data())+"|"+ string(student.usn.data())+"|"+string(student.age.data())+"|"+string(student.sem.data())+"|"+string(student.branch.data());
   fout<<record<<endl;
   fout.close();
@@ -95,13 +97,13 @@ while(fin>>record){
 cout<<setw(50)<<"Record Not Found!";
 }
 
-
+//unpack the record into the container passed to the function
 int unpack(vector<string>& search_record,string record,string usn){
   stringstream searBuffer;
   searBuffer<<record;
   vector<string> temp_list{};
   string temp;
-  while(getline(searBuffer,temp,'|')){
+  while(getline(searBuffer,temp,'|')){//unpack upon seeing delimeter |
     temp_list.push_back(temp);
   }
   searBuffer.clear();
@@ -197,7 +199,6 @@ void modify(){
   cout<<"Branch ?";//cin>>student.branch;
   cin.get(student.branch.data(),student.branch.size());
   cleanInput_stream();
-  //reuse record variable
   record =  string(student.name.data())+"|"+ string(student.usn.data())+"|"+string(student.age.data())+"|"+string(student.sem.data())+"|"+string(student.branch.data());
   record_list.at(recordLocation) = record;//update the record
   fstream fout("student.dat",fstream::out);
